@@ -9,11 +9,19 @@ namespace HW_28_AutoEx.Tests
     public class HomePageTests : UITestFixture
     {
         private HomePage _homePage;
+        private ProductsPage _productsPage;
+        private CartPage _cartPage;
+        private LoginPage _loginPage;
+        private ContactPage _contactPage;
 
         [SetUp]
         public async Task SetUp()
         {
             _homePage = new HomePage(Page!);
+            _productsPage = new ProductsPage(Page!);
+            _cartPage = new CartPage(Page!);
+            _loginPage = new LoginPage(Page!);
+            _contactPage = new ContactPage(Page!);
             await _homePage.GoToPage();
         }
 
@@ -21,28 +29,28 @@ namespace HW_28_AutoEx.Tests
         public async Task GotoProductsPage()
         {
             await _homePage.ClickPageLink("Products");
-            await _homePage.VerifyPageHeading("All Products");
+            await _productsPage.VerifyPageHeading("All Products");
         }
 
         [Test]
         public async Task GotoCartPage()
         {
             await _homePage.ClickPageLink("Cart");
-            await _homePage.VerifyTextVisible("Shopping Cart");
+            await _cartPage.VerifyTextVisible("Shopping Cart");
         }
 
         [Test]
         public async Task GotoLoginPage()
         {
-            await _homePage.ClickPageLink("Login"); // Signup / Login
-            await _homePage.VerifyPageHeading("Login to your account");
+            await _homePage.ClickPageLink("Login");
+            await _loginPage.VerifyPageHeading("Login to your account");
         }
 
         [Test]
         public async Task GotoContactPage()
         {
             await _homePage.ClickPageLink("Contact us");
-            await _homePage.VerifyPageHeading("Contact Us");
+            await _contactPage.VerifyPageHeading("Contact Us");
         }
     }
 }

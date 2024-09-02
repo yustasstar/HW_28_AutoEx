@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
 
-namespace HW_28_AutoEx
+namespace HW_28_AutoEx.Tests
 {
     public class UITestFixture
     {
@@ -38,8 +38,8 @@ namespace HW_28_AutoEx
         [TearDown]
         public async Task Teardown()
         {
-			var failed = TestContext.CurrentContext.Result.Outcome == NUnit.Framework.Interfaces.ResultState.Error || TestContext.CurrentContext.Result.Outcome == NUnit.Framework.Interfaces.ResultState.Failure;
-           
+            var failed = TestContext.CurrentContext.Result.Outcome == NUnit.Framework.Interfaces.ResultState.Error || TestContext.CurrentContext.Result.Outcome == NUnit.Framework.Interfaces.ResultState.Failure;
+
             if (Context != null)
             {
                 await Context.Tracing.StopAsync(new()

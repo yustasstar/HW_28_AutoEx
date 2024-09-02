@@ -2,9 +2,9 @@
 
 namespace HW_28_AutoEx.Pages
 {
-    internal class HomePage(IPage page) : BasePage(page)
+    internal class TCPage(IPage page) : BasePage(page)
     {
-        private readonly string pageUrl = "https://automationexercise.com/";
+        private readonly string pageUrl = "https://automationexercise.com/test_cases";
         private new readonly IPage page = page;
         //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
         //private ILocator ElementLocator2 => page.Locator("selector2");
