@@ -4,11 +4,9 @@ namespace HW_28_AutoEx
 {
     public class UITestFixture
     {
-		public static IBrowserContext? Context { get; private set; }
-        public static IPage? Page { get; private set; }
         private static IBrowser? Browser;
-        internal static string baseUrl = "https://automationexercise.com/";
-
+        public static IBrowserContext? Context { get; private set; }
+        public static IPage? Page { get; private set; }
 
         [SetUp]
         public async Task Setup()
