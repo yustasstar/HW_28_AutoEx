@@ -52,14 +52,14 @@ Copy code:
 
 4) Autimate  5 from 8 test cases (https://automationexercise.com/test_cases)
 
-Test Case 6: Contact Us Form
-Test Case 8: Verify All Products and product detail page
-Test Case 9: Search Product
-Test Case 11: Verify Subscription in Cart page
-Test Case 13: Verify Product quantity in Cart
-Test Case 16: Place Order: Login before Checkout (without  'Delete Account')
-Test Case 17: Remove Products From Cart
-Test Case 22: Add to cart from Recommended items
+    Test Case 6: Contact Us Form
+    Test Case 8: Verify All Products and product detail page
+    Test Case 9: Search Product
+    Test Case 11: Verify Subscription in Cart page
+    Test Case 13: Verify Product quantity in Cart
+    Test Case 16: Place Order: Login before Checkout (without  'Delete Account')
+    Test Case 17: Remove Products From Cart
+    Test Case 22: Add to cart from Recommended items
 
 5) Use the recommendations from GP 18 and from https://github.com/OleksiiKhorunzhak/hilel-aqa/blob/main/CodeSmells/CodeSmells.cs
 
