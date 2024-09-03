@@ -1,6 +1,7 @@
 using System.Diagnostics.Metrics;
 using System.Text.RegularExpressions;
 using HW_28_AutoEx.Pages;
+using HW_28_AutoEx.Setup;
 using Microsoft.Playwright;
 using NUnit.Framework.Internal;
 

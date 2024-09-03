@@ -1,12 +1,13 @@
 using Microsoft.Playwright;
 
-namespace HW_28_AutoEx.Tests
+namespace HW_28_AutoEx.Setup
 {
     public class UITestFixture
     {
         private static IBrowser? Browser;
         public static IBrowserContext? Context { get; private set; }
         public static IPage? Page { get; private set; }
+
 
         [SetUp]
         public async Task Setup()
