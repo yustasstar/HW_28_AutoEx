@@ -1,8 +1,9 @@
+using HW_28_AutoEx.API;
 using Microsoft.Playwright;
 
 namespace HW_28_AutoEx.Setup
 {
-    public class UITestFixture
+    public class UITestFixture : GlobalSetup
     {
         private static IBrowser? Browser;
         public static IBrowserContext? Context { get; private set; }

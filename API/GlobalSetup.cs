@@ -2,19 +2,21 @@
 
 namespace HW_28_AutoEx.API
 {
-    internal class CreateNewUser
+    public class GlobalSetup
     {
-        private readonly IAPIRequestContext _apiContext;
+        private IAPIRequestContext _apiContext;
         private readonly string _userEmail = "mailForTest123@test.com";
         private readonly string _userPassword = "P@ssword123";
 
         [OneTimeSetUp]
         public async Task CreateAccount()
         {
-            var headers = new Dictionary<string, string>();
-            headers.Add("Accept", "application/json");
-            var playwrightDriver = await Playwright.CreateAsync();
-            var apiContext = await playwrightDriver.APIRequest.NewContextAsync(new()
+            var headers = new Dictionary<string, string>
+            {
+                { "Accept", "application/json" }
+            };
+            IPlaywright playwrightDriver = await Playwright.CreateAsync();
+            _apiContext = await playwrightDriver.APIRequest.NewContextAsync(new()
             {
                 BaseURL = "https://automationexercise.com/api/",
                 ExtraHTTPHeaders = headers,
@@ -25,9 +27,9 @@ namespace HW_28_AutoEx.API
             formDataCreate.Append("email", _userEmail);
             formDataCreate.Append("password", _userPassword);
             formDataCreate.Append("title", "Mr");
-            formDataCreate.Append("birth_date", "Mr");
-            formDataCreate.Append("birth_month", "Mr");
-            formDataCreate.Append("birth_year", "Mr");
+            formDataCreate.Append("birth_date", "01");
+            formDataCreate.Append("birth_month", "01");
+            formDataCreate.Append("birth_year", "2000");
             formDataCreate.Append("firstname", "FirstName");
             formDataCreate.Append("lastname", "LastName");
             formDataCreate.Append("company", "TestCORP");
@@ -39,7 +41,7 @@ namespace HW_28_AutoEx.API
             formDataCreate.Append("zipcode", "65000");
             formDataCreate.Append("mobile_number", "+380671234567");
 
-            var responseCreate = await apiContext.PostAsync("createAccount", options: new() { Form = formDataCreate });
+            var responseCreate = await _apiContext.PostAsync("createAccount", options: new() { Form = formDataCreate });
             var bodyCreate = await responseCreate.JsonAsync();
             var bodyStatusCreate = bodyCreate.Value.GetProperty("responseCode").GetInt32();
 
@@ -66,6 +68,8 @@ namespace HW_28_AutoEx.API
                 Assert.That(responseDelete.Status, Is.EqualTo(200));
                 Assert.That(bodyStatusDelete, Is.EqualTo(200));
             });
+
+            await _apiContext.DisposeAsync(); // Clean up
         }
     }
 }
