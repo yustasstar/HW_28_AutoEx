@@ -1,12 +1,22 @@
 ﻿using Microsoft.Playwright;
+using System.Text.Json;
 
 namespace HW_28_AutoEx.API
 {
     public class GlobalSetup
     {
         private IAPIRequestContext _apiContext;
-        private readonly string _userEmail = "mailForTest123@test.com";
-        private readonly string _userPassword = "P@ssword123";
+        private readonly string _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\user.json");
+
+        private async Task<Dictionary<string, string>> LoadFormDataFieldsAsync()
+        {
+            var jsonData = await File.ReadAllTextAsync(_filePath);
+            var formDataFields = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData);
+
+            // Handle the case where deserialization returns null
+            return formDataFields ?? throw new InvalidOperationException("Deserialized form data fields are null.");
+        }
+
 
         [OneTimeSetUp]
         public async Task CreateAccount()
@@ -15,6 +25,7 @@ namespace HW_28_AutoEx.API
             {
                 { "Accept", "application/json" }
             };
+
             IPlaywright playwrightDriver = await Playwright.CreateAsync();
             _apiContext = await playwrightDriver.APIRequest.NewContextAsync(new()
             {
@@ -22,54 +33,69 @@ namespace HW_28_AutoEx.API
                 ExtraHTTPHeaders = headers,
             });
 
-            IFormData formDataCreate = _apiContext.CreateFormData();
-            formDataCreate.Append("name", "TestName");
-            formDataCreate.Append("email", _userEmail);
-            formDataCreate.Append("password", _userPassword);
-            formDataCreate.Append("title", "Mr");
-            formDataCreate.Append("birth_date", "01");
-            formDataCreate.Append("birth_month", "01");
-            formDataCreate.Append("birth_year", "2000");
-            formDataCreate.Append("firstname", "FirstName");
-            formDataCreate.Append("lastname", "LastName");
-            formDataCreate.Append("company", "TestCORP");
-            formDataCreate.Append("address1", "Test Address 1");
-            formDataCreate.Append("address2", "Test Address 2");
-            formDataCreate.Append("country", "UA");
-            formDataCreate.Append("state", "OD");
-            formDataCreate.Append("city", "Odessa");
-            formDataCreate.Append("zipcode", "65000");
-            formDataCreate.Append("mobile_number", "+380671234567");
+            if (!File.Exists(_filePath))
+            {
+                throw new FileNotFoundException($"Could not find 'user.json' file at {_filePath}");
+            }
+
+            var formDataFields = await LoadFormDataFieldsAsync();
+            if (formDataFields == null)
+            {
+                Assert.Fail("Form data fields could not be loaded.");
+                return;
+            }
+
+            var formDataCreate = _apiContext.CreateFormData();
+            foreach (var field in formDataFields)
+            {
+                formDataCreate.Append(field.Key, field.Value);
+            }
 
             var responseCreate = await _apiContext.PostAsync("createAccount", options: new() { Form = formDataCreate });
             var bodyCreate = await responseCreate.JsonAsync();
-            var bodyStatusCreate = bodyCreate.Value.GetProperty("responseCode").GetInt32();
+            var bodyCreateStatus = bodyCreate.Value.GetProperty("responseCode").GetInt32();
+            var bodyCreateMessage = bodyCreate.Value.GetProperty("message").GetString();
 
             Assert.Multiple(() =>
             {
                 Assert.That(responseCreate.Status, Is.EqualTo(200));
-                Assert.That(bodyStatusCreate, Is.EqualTo(201));
+                Assert.That(bodyCreateStatus, Is.EqualTo(201), $"{bodyCreateMessage}");
             });
         }
 
         [OneTimeTearDown]
         public async Task DeleteAccount()
         {
-            IFormData formDataDelete = _apiContext.CreateFormData();
-            formDataDelete.Append("email", _userEmail);
-            formDataDelete.Append("password", _userPassword);
+            if (!File.Exists(_filePath))
+            {
+                throw new FileNotFoundException($"Could not find 'user.json' file at {_filePath}");
+            }
 
+            var formDataFields = await LoadFormDataFieldsAsync();
+            if (formDataFields == null || !formDataFields.TryGetValue("email", out var email) || !formDataFields.TryGetValue("password", out var password))
+            {
+                Assert.Fail("Email or password could not be retrieved from the JSON file.");
+                return;
+            }
+
+            // Create and populate form data for deletion
+            var formDataDelete = _apiContext.CreateFormData();
+            formDataDelete.Append("email", email);
+            formDataDelete.Append("password", password);
+
+            // Send DELETE request to delete account
             var responseDelete = await _apiContext.DeleteAsync("deleteAccount", options: new() { Form = formDataDelete });
             var bodyDelete = await responseDelete.JsonAsync();
-            var bodyStatusDelete = bodyDelete.Value.GetProperty("responseCode").GetInt32();
+            var bodyDeleteStatus = bodyDelete.Value.GetProperty("responseCode").GetInt32();
+            var bodyDeleteMessage = bodyDelete.Value.GetProperty("message").GetString();
 
             Assert.Multiple(() =>
             {
                 Assert.That(responseDelete.Status, Is.EqualTo(200));
-                Assert.That(bodyStatusDelete, Is.EqualTo(200));
+                Assert.That(bodyDeleteStatus, Is.EqualTo(200), $"{bodyDeleteMessage}");
             });
 
-            await _apiContext.DisposeAsync(); // Clean up
+            await _apiContext.DisposeAsync();
         }
     }
 }

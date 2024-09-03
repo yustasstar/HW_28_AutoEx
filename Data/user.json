@@ -1,0 +1,19 @@
+{
+  "name": "TestName",
+  "email": "mailForTest123@test.com",
+  "password": "P@ssword123",
+  "title": "Mr",
+  "birth_date": "01",
+  "birth_month": "01",
+  "birth_year": "2000",
+  "firstname": "FirstName",
+  "lastname": "LastName",
+  "company": "TestCORP",
+  "address1": "Test Address 1",
+  "address2": "Test Address 2",
+  "country": "UA",
+  "state": "OD",
+  "city": "Odessa",
+  "zipcode": "65000",
+  "mobile_number": "+380671234567"
+}

@@ -6,8 +6,8 @@ namespace HW_28_AutoEx.Setup
     public class UITestFixture : GlobalSetup
     {
         private static IBrowser? Browser;
-        public static IBrowserContext? Context { get; private set; }
-        public static IPage? Page { get; private set; }
+        internal static IBrowserContext? Context { get; private set; }
+        internal static IPage? Page { get; private set; }
 
 
         [SetUp]

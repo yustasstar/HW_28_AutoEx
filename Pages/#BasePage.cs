@@ -4,7 +4,10 @@ namespace HW_28_AutoEx.Pages
 {
     internal abstract class BasePage(IPage page)
     {
-        internal IPage page = page;
+        private readonly IPage page = page;
+        //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
+        //private ILocator ElementLocator2 => page.Locator("selector2");
+        //private ILocator ElementLocator3 => page.Locator("selector3");
 
         public abstract string GetPageUrl();
 
