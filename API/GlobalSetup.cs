@@ -6,17 +6,7 @@ namespace HW_28_AutoEx.API
     public class GlobalSetup
     {
         private IAPIRequestContext _apiContext;
-        private readonly string _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\user.json");
-
-        private async Task<Dictionary<string, string>> LoadFormDataFieldsAsync()
-        {
-            var jsonData = await File.ReadAllTextAsync(_filePath);
-            var formDataFields = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData);
-
-            // Handle the case where deserialization returns null
-            return formDataFields ?? throw new InvalidOperationException("Deserialized form data fields are null.");
-        }
-
+        private readonly string _userFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\user.json");
 
         [OneTimeSetUp]
         public async Task CreateAccount()
@@ -33,9 +23,9 @@ namespace HW_28_AutoEx.API
                 ExtraHTTPHeaders = headers,
             });
 
-            if (!File.Exists(_filePath))
+            if (!File.Exists(_userFilePath))
             {
-                throw new FileNotFoundException($"Could not find 'user.json' file at {_filePath}");
+                throw new FileNotFoundException($"Could not find 'user.json' file at {_userFilePath}");
             }
 
             var formDataFields = await LoadFormDataFieldsAsync();
@@ -66,9 +56,9 @@ namespace HW_28_AutoEx.API
         [OneTimeTearDown]
         public async Task DeleteAccount()
         {
-            if (!File.Exists(_filePath))
+            if (!File.Exists(_userFilePath))
             {
-                throw new FileNotFoundException($"Could not find 'user.json' file at {_filePath}");
+                throw new FileNotFoundException($"Could not find 'user.json' file at {_userFilePath}");
             }
 
             var formDataFields = await LoadFormDataFieldsAsync();
@@ -96,6 +86,15 @@ namespace HW_28_AutoEx.API
             });
 
             await _apiContext.DisposeAsync();
+        }
+
+        private async Task<Dictionary<string, string>> LoadFormDataFieldsAsync()
+        {
+            var jsonData = await File.ReadAllTextAsync(_userFilePath);
+            var formDataFields = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData);
+
+            // Handle the case where deserialization returns null
+            return formDataFields ?? throw new InvalidOperationException("Deserialized form data fields are null.");
         }
     }
 }

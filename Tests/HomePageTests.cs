@@ -27,7 +27,7 @@ namespace HW_28_AutoEx.Tests
             _cartPage = new CartPage(Page!);
             _loginPage = new LoginPage(Page!);
             _contactPage = new ContactPage(Page!);
-            await _homePage.GoToPage();
+            //await _homePage.GoToPage();
         }
 
         [Test]

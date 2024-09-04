@@ -1,5 +1,7 @@
 using HW_28_AutoEx.API;
 using Microsoft.Playwright;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace HW_28_AutoEx.Setup
 {
@@ -9,7 +11,6 @@ namespace HW_28_AutoEx.Setup
         internal static IBrowserContext? Context { get; private set; }
         internal static IPage? Page { get; private set; }
 
-
         [SetUp]
         public async Task Setup()
         {
@@ -18,6 +19,24 @@ namespace HW_28_AutoEx.Setup
             {
                 Headless = false
             });
+
+            var storagePath = "../../../playwright/.auth/state.json";
+            var fileInfo = new FileInfo(storagePath);
+
+            if (!fileInfo.Exists)
+            {
+                Directory.CreateDirectory(fileInfo.Directory.FullName);
+                using (FileStream fs = File.Create(storagePath))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes("");
+                    fs.Write(info, 0, info.Length);
+                }
+                Console.WriteLine($"File '{storagePath}' created successfully.");
+            }
+            else
+            {
+                Console.WriteLine($"File '{storagePath}' already exists.");
+            }
 
             Context = await Browser.NewContextAsync(new BrowserNewContextOptions
             {
@@ -35,6 +54,21 @@ namespace HW_28_AutoEx.Setup
             Page = await Context.NewPageAsync();
             Page.SetDefaultTimeout(15000);
             //Page.PauseAsync();
+
+            var navbarLocator = Page.Locator("//ul[@class='nav navbar-nav']");
+            var isLogined = await navbarLocator.Locator("text=Logout").IsVisibleAsync();
+
+            await Page.GotoAsync("https://automationexercise.com/", new() { WaitUntil = WaitUntilState.DOMContentLoaded });
+            if (!isLogined) //if see login link -> //ul[@class='nav navbar-nav']//a[contains(text(),'Login')]
+            {
+                await Page.Locator("//a[contains(text(),'Login')]").ClickAsync();
+                await Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
+                await Page.Locator("[data-qa='login-email']").FillAsync("mailForTest123@test.com");
+                await Page.Locator("[data-qa='login-password']").FillAsync("P@ssword123");
+                await Page.GetByRole(AriaRole.Button, new() { Name = "Login" }).ClickAsync();
+                await Assertions.Expect(Page.Locator("//a[contains(text(),'Logged in as')]")).ToBeVisibleAsync();
+                await Context.StorageStateAsync(new() { Path = storagePath });
+            }
         }
 
         [TearDown]

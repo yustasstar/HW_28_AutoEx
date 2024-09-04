@@ -4,7 +4,7 @@ namespace HW_28_AutoEx.Pages
 {
     internal class LoginPage(IPage page) : BasePage(page)
     {
-        private readonly string pageUrl = "https://automationexercise.com/products";
+        public readonly string loginPageUrl = "https://automationexercise.com/products";
         private readonly IPage page = page;
         //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
         //private ILocator ElementLocator2 => page.Locator("selector2");
@@ -12,7 +12,7 @@ namespace HW_28_AutoEx.Pages
 
         public override string GetPageUrl()
         {
-            return pageUrl;
+            return loginPageUrl;
         }
     }
 }

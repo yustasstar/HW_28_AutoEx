@@ -8,7 +8,7 @@ namespace HW_28_AutoEx.Pages
         //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
         //private ILocator ElementLocator2 => page.Locator("selector2");
         //private ILocator ElementLocator3 => page.Locator("selector3");
-
+    
         public abstract string GetPageUrl();
 
         public async Task GoToPage()
