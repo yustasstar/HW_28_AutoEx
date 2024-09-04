@@ -9,12 +9,12 @@ namespace HW_28_AutoEx.Pages
         //private ILocator ElementLocator2 => page.Locator("selector2");
         //private ILocator ElementLocator3 => page.Locator("selector3");
     
-        public abstract string GetPageUrl();
+        //public abstract string GetPageUrl();
 
-        public async Task GoToPage()
-        {
-            await page.GotoAsync(GetPageUrl(), new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-        }
+        //public async Task GoToPage()
+        //{
+        //    await page.GotoAsync(GetPageUrl(), new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+        //}
 
         public async Task ClickPageLink(string linkName)
         {

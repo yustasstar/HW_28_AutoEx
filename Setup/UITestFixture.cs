@@ -1,7 +1,7 @@
 using HW_28_AutoEx.API;
 using Microsoft.Playwright;
 using System.Text;
-using System.Text.RegularExpressions;
+//using System.Text.RegularExpressions;
 
 namespace HW_28_AutoEx.Setup
 {
@@ -41,6 +41,7 @@ namespace HW_28_AutoEx.Setup
             Context = await Browser.NewContextAsync(new BrowserNewContextOptions
             {
                 ViewportSize = new ViewportSize { Width = 1885, Height = 945 },
+                StorageStatePath = storagePath
             });
 
             await Context.Tracing.StartAsync(new()
@@ -53,16 +54,17 @@ namespace HW_28_AutoEx.Setup
 
             Page = await Context.NewPageAsync();
             Page.SetDefaultTimeout(15000);
-            //Page.PauseAsync();
-
-            var navbarLocator = Page.Locator("//ul[@class='nav navbar-nav']");
-            var isLogined = await navbarLocator.Locator("text=Logout").IsVisibleAsync();
 
             await Page.GotoAsync("https://automationexercise.com/", new() { WaitUntil = WaitUntilState.DOMContentLoaded });
-            if (!isLogined) //if see login link -> //ul[@class='nav navbar-nav']//a[contains(text(),'Login')]
+            //Page.PauseAsync();
+            //await Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
+
+            var navbarLocator = Page.Locator("//ul[@class='nav navbar-nav']");
+            var isLogined = await navbarLocator.Locator("//a[contains(text(),'Logout')]").IsVisibleAsync(); //TODO: FILTER
+
+            if (!isLogined)
             {
                 await Page.Locator("//a[contains(text(),'Login')]").ClickAsync();
-                await Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
                 await Page.Locator("[data-qa='login-email']").FillAsync("mailForTest123@test.com");
                 await Page.Locator("[data-qa='login-password']").FillAsync("P@ssword123");
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Login" }).ClickAsync();
