@@ -1,7 +1,6 @@
 using HW_28_AutoEx.API;
 using Microsoft.Playwright;
 using System.Text;
-//using System.Text.RegularExpressions;
 
 namespace HW_28_AutoEx.Setup
 {
@@ -21,7 +20,7 @@ namespace HW_28_AutoEx.Setup
             });
 
             var storagePath = "../../../playwright/.auth/state.json";
-            var fileInfo = new FileInfo(storagePath);
+            FileInfo fileInfo = new(storagePath);
 
             if (!fileInfo.Exists)
             {
@@ -58,9 +57,9 @@ namespace HW_28_AutoEx.Setup
             await Page.GotoAsync("https://automationexercise.com/", new() { WaitUntil = WaitUntilState.DOMContentLoaded });
             //Page.PauseAsync();
             //await Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
-
+                
             var navbarLocator = Page.Locator("//ul[@class='nav navbar-nav']");
-            var isLogined = await navbarLocator.Locator("//a[contains(text(),'Logout')]").IsVisibleAsync(); //TODO: FILTER
+            var isLogined = await navbarLocator.Locator("//a[contains(text(),'Logout')]").IsVisibleAsync();
 
             if (!isLogined)
             {

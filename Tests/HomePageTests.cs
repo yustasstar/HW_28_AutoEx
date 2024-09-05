@@ -1,9 +1,5 @@
-using System.Diagnostics.Metrics;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using HW_28_AutoEx.Pages;
 using HW_28_AutoEx.Setup;
-using Microsoft.Playwright;
 using NUnit.Framework.Internal;
 
 
@@ -20,14 +16,13 @@ namespace HW_28_AutoEx.Tests
         private ContactPage _contactPage;
 
         [SetUp]
-        public async Task SetUp()
+        public void SetUp()
         {
             _homePage = new HomePage(Page!);
             _productsPage = new ProductsPage(Page!);
             _cartPage = new CartPage(Page!);
             _loginPage = new LoginPage(Page!);
             _contactPage = new ContactPage(Page!);
-            //await _homePage.GoToPage();
         }
 
         [Test]
