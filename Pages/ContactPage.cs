@@ -9,7 +9,7 @@ namespace HW_28_AutoEx.Pages
         public ILocator NameInput => page.GetByPlaceholder("Name");
         public ILocator EmailInput => page.GetByPlaceholder("Email", new() { Exact = true });
         public ILocator SubjectInput => page.GetByPlaceholder("Subject");
-        public ILocator MessageInput => page.GetByPlaceholder("Your Message Here");
+        public ILocator MessageInput => page.GetByPlaceholder("Your Message Here"); 
         public ILocator UploadFileBtn => page.Locator("input[name='upload_file']");
         public ILocator SubmitBtn => page.GetByRole(AriaRole.Button, new() { Name = "Submit" });
         public ILocator HomeBtn => page.Locator("//*[@class='btn btn-success']"); 

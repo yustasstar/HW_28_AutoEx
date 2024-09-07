@@ -6,11 +6,10 @@ namespace HW_28_AutoEx.Pages
     {
         private readonly IPage page = page;
         //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
-    
 
-        public async Task ClickPageLink(string linkName)
+        public async Task ClickOnLink(string linkName)
         {
-            await page.GetByRole(AriaRole.Link).Filter(new() { HasText = $"{linkName}" }).ClickAsync();
+            await page.GetByRole(AriaRole.Link).Filter(new() { HasText = $"{linkName}" }).First.ClickAsync();
         }
 
         public async Task VerifyPageHeading(string heading)
@@ -18,7 +17,7 @@ namespace HW_28_AutoEx.Pages
             await Assertions.Expect(page.GetByRole(AriaRole.Heading, new() { Name = $"{heading}" })).ToBeVisibleAsync();
         }
 
-        public async Task VerifyLocatorText(ILocator locator, string text)
+        public async Task VerifyLocatorHaveText(ILocator locator, string text)
         {
             await Assertions.Expect(locator).ToHaveTextAsync(text);
         }

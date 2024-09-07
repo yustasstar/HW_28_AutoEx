@@ -6,8 +6,11 @@ namespace HW_28_AutoEx.Pages
     {
         //private readonly string cartPageUrl = "https://automationexercise.com/view_cart";
         private readonly IPage page = page;
-        public ILocator CartSection => page.Locator("#cart_items");
-        //private ILocator ElementLocator2 => page.Locator("selector2");
+        public ILocator CartSection => page.Locator(".active");
+        public ILocator EmailInput => page.GetByPlaceholder("Your email address");
+        public ILocator SubmitBtn => page.Locator("#subscribe");
+        public ILocator SuccessMsg => page.Locator("#success-subscribe");
+
 
     }
 }

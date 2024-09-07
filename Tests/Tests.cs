@@ -1,6 +1,5 @@
 using HW_28_AutoEx.Pages;
 using HW_28_AutoEx.Setup;
-using Microsoft.Playwright;
 using NUnit.Framework.Internal;
 
 
@@ -26,90 +25,97 @@ namespace HW_28_AutoEx.Tests
             _contactPage = new ContactPage(Page!);
         }
 
-        [Test]
-        public async Task GotoProductsPage()
-        {
-            await _homePage.ClickPageLink("Products");
-            await _productsPage.VerifyPageHeading("All Products");
-        }
-
-        [Test]
-        public async Task GotoCartPage()
-        {
-            await _homePage.ClickPageLink("Cart");
-            await _cartPage.VerifyLocatorText(_cartPage.CartSection, "Shopping Cart");
-        }
-
-        [Test]
-        public async Task GotoLoginPage()
-        {
-            await _homePage.ClickPageLink("Login");
-            await _loginPage.VerifyPageHeading("Login to your account");
-        }
-
-        [Test]
-        public async Task GotoContactPage()
-        {
-            await _homePage.ClickPageLink("Contact us");
-            await _contactPage.VerifyPageHeading("Contact Us");
-        }
-
-        //Test Case 6: Contact Us Form
+        [Description("Test Case 6: Contact Us Form")]
         [Test]
         public async Task ContactUsForm()
         {
+            //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
-            await _homePage.ClickPageLink("Contact us");
+            //4.Click on 'Contact Us' button
+            await _homePage.ClickOnLink("Contact us");
+            //5.Verify 'GET IN TOUCH' is visible
             await _contactPage.VerifyPageHeading("GET IN TOUCH");
-
+            //6.Enter name, email, subject and message
             await _contactPage.NameInput.FillAsync("TestName");
             await _contactPage.EmailInput.FillAsync("TestEmail123@mail.com");
             await _contactPage.SubjectInput.FillAsync("Subject is testing");
             await _contactPage.MessageInput.FillAsync("it's a super test Message");
+            //7.Upload file
             await _contactPage.UploadFile();
+            //8.Click 'Submit' button
             await _contactPage.SubmitBtn.ClickAsync();
+            //9.Click OK button
             await _contactPage.DialogAccept();
-            await _contactPage.VerifyLocatorText(_contactPage.SuccessMsg, "Success! Your details have been submitted successfully.");
-
+            //10.Verify success message 'Success! Your details have been submitted successfully.' is visible
+            await _contactPage.VerifyLocatorHaveText(_contactPage.SuccessMsg, "Success! Your details have been submitted successfully.");
+            //11.Click 'Home' button and verify that landed to home page successfully
             await _contactPage.HomeBtn.ClickAsync();
             await _homePage.VerifyCarouselIndicatorsVisability();
         }
 
+        [Description("Test Case 8: Verify All Products and product detail page")]
+        [Test]
+        public async Task ProductDetails()
+        {
+            //3.Verify that home page is visible successfully
+            await _homePage.VerifyCarouselIndicatorsVisability();
+            //4. Click on 'Products' button
+            await _homePage.ClickOnLink("Products");
+            //5. Verify user is navigated to ALL PRODUCTS page successfully
+            await _productsPage.VerifyPageHeading("All Products");
+            //6. The products list is visible
+            await _productsPage.VerifyProductsListVisability();
+            //7. Click on 'View Product' of first product
+            await _productsPage.ClickOnLink("View Product");
+            //8. User is landed to product detail page
+            await _productsPage.VerifyProductsDetailsOpened();
+            //9. Verify that product detail is visible: product name, category, price, availability, condition, brand
+            await _productsPage.VerifyProductsDetailsContentVisability();
+        }
 
-        //       Test Case 8: Verify All Products and product detail page
-        //1. Launch browser
-        //2. Navigate to url 'http://automationexercise.com'
-        //3. Verify that home page is visible successfully
-        //4. Click on 'Products' button
-        //5. Verify user is navigated to ALL PRODUCTS page successfully
-        //6. The products list is visible
-        //7. Click on 'View Product' of first product
-        //8. User is landed to product detail page
-        //9. Verify that detail detail is visible: product name, category, price, availability, condition, brand
+        [Description("Test Case 9: Search Product")]
+        [Test]
+        public async Task SearchProduct()
+        {
+            var searchText = "cotton";
 
-        //        Test Case 9: Search Product
-        //1. Launch browser
-        //2. Navigate to url 'http://automationexercise.com'
-        //3. Verify that home page is visible successfully
-        //4. Click on 'Products' button
-        //5. Verify user is navigated to ALL PRODUCTS page successfully
-        //6. Enter product name in search input and click search button
-        //7. Verify 'SEARCHED PRODUCTS' is visible
-        //8. Verify all the products related to search are visible
+            //3.Verify that home page is visible successfully
+            await _homePage.VerifyCarouselIndicatorsVisability();
+            //4. Click on 'Products' button
+            await _homePage.ClickOnLink("Products");
+            //5. Verify user is navigated to ALL PRODUCTS page successfully
+            await _productsPage.VerifyPageHeading("All Products");
+            //6. Enter product name in search input and click search button
+            await _productsPage.SearchInput.FillAsync(searchText);
+            await _productsPage.SearchBtn.ClickAsync();
+            //7. Verify 'SEARCHED PRODUCTS' is visible
+            await _productsPage.VerifyPageHeading("SEARCHED PRODUCTS");
+            //8. Verify all the products related to search are visible 
+            await _productsPage.VerifyAllProductsRelatedToSearch(searchText);
 
-        //        Test Case 11: Verify Subscription in Cart page
-        //1. Launch browser
-        //2. Navigate to url 'http://automationexercise.com'
-        //3. Verify that home page is visible successfully
-        //4. Click 'Cart' button
-        //5. Scroll down to footer
-        //6. Verify text 'SUBSCRIPTION'
-        //7. Enter email address in input and click arrow button
-        //8. Verify success message 'You have been successfully subscribed!' is visible
+        }      
+
+        [Description("Test Case 11: Verify Subscription in Cart page")]
+        [Test]
+        public async Task VerifySubscription()
+        {
+            //3.Verify that home page is visible successfully
+            await _homePage.VerifyCarouselIndicatorsVisability();
+            //4. Click 'Cart' button
+            await _homePage.ClickOnLink("Cart");
+            //5. Scroll down to footer
+            //6. Verify text 'SUBSCRIPTION'
+            await _cartPage.VerifyPageHeading("SUBSCRIPTION");
+            //7. Enter email address in input and click arrow button 
+            await _cartPage.EmailInput.FillAsync("TestEmail123@mail.com");
+            await _cartPage.SubmitBtn.ClickAsync();
+            //8. Verify success message 'You have been successfully subscribed!' is visible
+            await _cartPage.VerifyLocatorHaveText(_cartPage.SuccessMsg, "You have been successfully subscribed!");
+        }
+
 
         //        Test Case 13: Verify Product quantity in Cart
-        //1. Launch browser
-        //2. Navigate to url 'http://automationexercise.com'
+
         //3. Verify that home page is visible successfully
         //4. Click 'View Product' for any product on home page
         //5. Verify product detail is opened
@@ -119,8 +125,7 @@ namespace HW_28_AutoEx.Tests
         //9. Verify that product is displayed in cart page with exact quantity
 
         //        Test Case 16: Place Order: Login before Checkout
-        //1. Launch browser
-        //2. Navigate to url 'http://automationexercise.com'
+
         //3. Verify that home page is visible successfully
         //4. Click 'Signup / Login' button
         //5. Fill email, password and click 'Login' button
@@ -138,8 +143,7 @@ namespace HW_28_AutoEx.Tests
         //17. Verify 'ACCOUNT DELETED!' and click 'Continue' button
 
         //        Test Case 17: Remove Products From Cart
-        //1. Launch browser
-        //2. Navigate to url 'http://automationexercise.com'
+
         //3. Verify that home page is visible successfully
         //4. Add products to cart
         //5. Click 'Cart' button
@@ -148,8 +152,7 @@ namespace HW_28_AutoEx.Tests
         //8. Verify that product is removed from the cart
 
         //        Test Case 22: Add to cart from Recommended items
-        //1. Launch browser
-        //2. Navigate to url 'http://automationexercise.com'
+
         //3. Scroll to bottom of page
         //4. Verify 'RECOMMENDED ITEMS' are visible
         //5. Click on 'Add To Cart' on Recommended product

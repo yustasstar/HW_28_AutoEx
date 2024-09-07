@@ -1,13 +1,15 @@
 using Microsoft.Playwright;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace HW_28_AutoEx.Setup
 {
     public class UITestFixture : GlobalSetup
     {
-        internal static IBrowser? Browser { get; private set; }
-        internal static IBrowserContext? Context { get; private set; }
-        internal static IPage? Page { get; private set; }
+        public readonly string homePageUrl = "https://automationexercise.com/";
+        public static IBrowser? Browser { get; private set; }
+        public static IBrowserContext? Context { get; private set; }
+        public static IPage? Page { get; private set; }
 
         [SetUp]
         public async Task Setup()
@@ -53,7 +55,7 @@ namespace HW_28_AutoEx.Setup
             Page = await Context.NewPageAsync();
             Page.SetDefaultTimeout(15000);
 
-            await Page.GotoAsync("https://automationexercise.com/", new() { WaitUntil = WaitUntilState.DOMContentLoaded });
+            await Page.GotoAsync(homePageUrl, new() { WaitUntil = WaitUntilState.DOMContentLoaded });
 
             var navbarLocator = Page.Locator("//ul[@class='nav navbar-nav']");
             var isLogined = await navbarLocator.Locator("//a[contains(text(),'Logout')]").IsVisibleAsync();
