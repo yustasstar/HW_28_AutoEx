@@ -2,7 +2,7 @@
 
 namespace HW_28_AutoEx.Pages
 {
-    internal class TCPage(IPage page) : BasePage(page)
+    internal class TCPage(IPage page) : HomePage(page)
     {
         //private readonly string pageUrl = "https://automationexercise.com/test_cases";
         private readonly IPage page = page;

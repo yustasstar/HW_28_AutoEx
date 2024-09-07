@@ -2,17 +2,10 @@
 
 namespace HW_28_AutoEx.Pages
 {
-    internal class ApiPage(IPage page) : BasePage(page)
+    internal class ApiPage(IPage page) : HomePage(page)
     {
         //private readonly string pageUrl = "https://automationexercise.com/api_list";
         private readonly IPage page = page;
         //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
-        //private ILocator ElementLocator2 => page.Locator("selector2");
-        //private ILocator ElementLocator3 => page.Locator("selector3");
-
-        //public override string GetPageUrl()
-        //{
-        //    return pageUrl;
-        //}
     }
 }

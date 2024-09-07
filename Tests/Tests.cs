@@ -97,7 +97,7 @@ namespace HW_28_AutoEx.Tests
 
         [Description("Test Case 11: Verify Subscription in Cart page")]
         [Test]
-        public async Task VerifySubscription()
+        public async Task Subscription()
         {
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
@@ -112,17 +112,24 @@ namespace HW_28_AutoEx.Tests
             //8. Verify success message 'You have been successfully subscribed!' is visible
             await _cartPage.VerifyLocatorHaveText(_cartPage.SuccessMsg, "You have been successfully subscribed!");
         }
+       
+        [Description("Test Case 13: Verify Product quantity in Cart")]
+        [Test]
+        public async Task ProductQuantity()
+        {
+            //3.Verify that home page is visible successfully
+            await _homePage.VerifyCarouselIndicatorsVisability();
+            //4. Click 'View Product' for any product on home page
+            await _homePage.VerifyCarouselIndicatorsVisability();
+            //5. Verify product detail is opened
+            //6. Increase quantity to 4
+            //7. Click 'Add to cart' button
+            //8. Click 'View Cart' button
+            //9. Verify that product is displayed in cart page with exact quantity
 
 
-        //        Test Case 13: Verify Product quantity in Cart
+        }
 
-        //3. Verify that home page is visible successfully
-        //4. Click 'View Product' for any product on home page
-        //5. Verify product detail is opened
-        //6. Increase quantity to 4
-        //7. Click 'Add to cart' button
-        //8. Click 'View Cart' button
-        //9. Verify that product is displayed in cart page with exact quantity
 
         //        Test Case 16: Place Order: Login before Checkout
 

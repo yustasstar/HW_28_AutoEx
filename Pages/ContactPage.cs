@@ -2,7 +2,7 @@
 
 namespace HW_28_AutoEx.Pages
 {
-    internal class ContactPage(IPage page) : BasePage(page)
+    internal class ContactPage(IPage page) : HomePage(page)
     {
         //private readonly string pageUrl = "https://automationexercise.com/contact_us";
         private readonly IPage page = page;

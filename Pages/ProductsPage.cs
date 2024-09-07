@@ -1,9 +1,8 @@
 ﻿using Microsoft.Playwright;
-using System.Text.RegularExpressions;
 
 namespace HW_28_AutoEx.Pages
 {
-    internal class ProductsPage(IPage page) : BasePage(page)
+    internal class ProductsPage(IPage page) : HomePage(page)
     {
         //private readonly string productPageUrl = "https://automationexercise.com/products";
         private readonly IPage page = page;

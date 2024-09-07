@@ -1,5 +1,4 @@
 using Microsoft.Playwright;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace HW_28_AutoEx.Setup
