@@ -1,5 +1,6 @@
 using HW_28_AutoEx.Pages;
 using HW_28_AutoEx.Setup;
+using Microsoft.Playwright;
 using NUnit.Framework.Internal;
 
 
@@ -7,7 +8,7 @@ namespace HW_28_AutoEx.Tests
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    public class HomePageTests : UITestFixture
+    public class Tests : UITestFixture
     {
         private HomePage _homePage;
         private ProductsPage _productsPage;
@@ -16,7 +17,7 @@ namespace HW_28_AutoEx.Tests
         private ContactPage _contactPage;
 
         [SetUp]
-        public void SetUp()
+        public void TestSetUp()
         {
             _homePage = new HomePage(Page!);
             _productsPage = new ProductsPage(Page!);
@@ -36,7 +37,7 @@ namespace HW_28_AutoEx.Tests
         public async Task GotoCartPage()
         {
             await _homePage.ClickPageLink("Cart");
-            await _cartPage.VerifyTextVisible("Shopping Cart");
+            await _cartPage.VerifyLocatorText(_cartPage.CartSection, "Shopping Cart");
         }
 
         [Test]
@@ -53,18 +54,27 @@ namespace HW_28_AutoEx.Tests
             await _contactPage.VerifyPageHeading("Contact Us");
         }
 
-        //       Test Case 6: Contact Us Form
-        //1. Launch browser
-        //2. Navigate to url 'http://automationexercise.com'
-        //3. Verify that home page is visible successfully
-        //4. Click on 'Contact Us' button
-        //5. Verify 'GET IN TOUCH' is visible
-        //6. Enter name, email, subject and message
-        //7. Upload file
-        //8. Click 'Submit' button
-        //9. Click OK button
-        //10. Verify success message 'Success! Your details have been submitted successfully.' is visible
-        //11. Click 'Home' button and verify that landed to home page successfully
+        //Test Case 6: Contact Us Form
+        [Test]
+        public async Task ContactUsForm()
+        {
+            await _homePage.VerifyCarouselIndicatorsVisability();
+            await _homePage.ClickPageLink("Contact us");
+            await _contactPage.VerifyPageHeading("GET IN TOUCH");
+
+            await _contactPage.NameInput.FillAsync("TestName");
+            await _contactPage.EmailInput.FillAsync("TestEmail123@mail.com");
+            await _contactPage.SubjectInput.FillAsync("Subject is testing");
+            await _contactPage.MessageInput.FillAsync("it's a super test Message");
+            await _contactPage.UploadFile();
+            await _contactPage.SubmitBtn.ClickAsync();
+            await _contactPage.DialogAccept();
+            await _contactPage.VerifyLocatorText(_contactPage.SuccessMsg, "Success! Your details have been submitted successfully.");
+
+            await _contactPage.HomeBtn.ClickAsync();
+            await _homePage.VerifyCarouselIndicatorsVisability();
+        }
+
 
         //       Test Case 8: Verify All Products and product detail page
         //1. Launch browser

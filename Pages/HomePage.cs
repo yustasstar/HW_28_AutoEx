@@ -4,15 +4,14 @@ namespace HW_28_AutoEx.Pages
 {
     internal class HomePage(IPage page) : BasePage(page)
     {
-        //private readonly string pageUrl = "https://automationexercise.com/";
+        //private readonly string homePageUrl = "https://automationexercise.com/";
         private readonly IPage page = page;
-        //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
+        public ILocator CarouselIndicators => page.Locator(".carousel-indicators");
         //private ILocator ElementLocator2 => page.Locator("selector2");
-        //private ILocator ElementLocator3 => page.Locator("selector3");
 
-        //public override string GetPageUrl()
-        //{
-        //    return pageUrl;
-        //}
+        public async Task VerifyCarouselIndicatorsVisability()
+        {
+            await Assertions.Expect(CarouselIndicators).ToBeVisibleAsync();
+        }
     }
 }

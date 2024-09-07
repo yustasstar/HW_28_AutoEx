@@ -1,7 +1,7 @@
 ﻿using Microsoft.Playwright;
 using System.Text.Json;
 
-namespace HW_28_AutoEx.API
+namespace HW_28_AutoEx.Setup
 {
     public class GlobalSetup
     {

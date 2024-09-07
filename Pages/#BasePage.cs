@@ -6,15 +6,7 @@ namespace HW_28_AutoEx.Pages
     {
         private readonly IPage page = page;
         //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
-        //private ILocator ElementLocator2 => page.Locator("selector2");
-        //private ILocator ElementLocator3 => page.Locator("selector3");
     
-        //public abstract string GetPageUrl();
-
-        //public async Task GoToPage()
-        //{
-        //    await page.GotoAsync(GetPageUrl(), new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-        //}
 
         public async Task ClickPageLink(string linkName)
         {
@@ -26,9 +18,9 @@ namespace HW_28_AutoEx.Pages
             await Assertions.Expect(page.GetByRole(AriaRole.Heading, new() { Name = $"{heading}" })).ToBeVisibleAsync();
         }
 
-        public async Task VerifyTextVisible(string text)
+        public async Task VerifyLocatorText(ILocator locator, string text)
         {
-            await Assertions.Expect(page.GetByText(text)).ToBeVisibleAsync();
+            await Assertions.Expect(locator).ToHaveTextAsync(text);
         }
     }
 }

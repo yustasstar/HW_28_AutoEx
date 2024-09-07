@@ -4,15 +4,10 @@ namespace HW_28_AutoEx.Pages
 {
     internal class CartPage(IPage page) : BasePage(page)
     {
-        //private readonly string pageUrl = "https://automationexercise.com/login";
+        //private readonly string cartPageUrl = "https://automationexercise.com/view_cart";
         private readonly IPage page = page;
-        //private ILocator PageLinkLocator => page.Locator("//a[contains(text(),'Products')]");
+        public ILocator CartSection => page.Locator("#cart_items");
         //private ILocator ElementLocator2 => page.Locator("selector2");
-        //private ILocator ElementLocator3 => page.Locator("selector3");
 
-        //public override string GetPageUrl()
-        //{
-        //    return pageUrl;
-        //}
     }
 }
