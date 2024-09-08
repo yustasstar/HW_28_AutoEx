@@ -2,7 +2,7 @@
 
 namespace HW_28_AutoEx.Pages
 {
-    internal class CartPage(IPage page) : HomePage(page)
+    internal class CartPage(IPage page) : BasePage(page)
     {
         //private readonly string cartPageUrl = "https://automationexercise.com/view_cart";
         private readonly IPage page = page;
