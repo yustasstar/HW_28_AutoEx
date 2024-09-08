@@ -5,7 +5,6 @@ namespace HW_28_AutoEx.Pages
     internal class ProductsPage(IPage page) : BasePage(page)
     {
         //private readonly string productPageUrl = "https://automationexercise.com/products";
-        private readonly IPage page = page;
         public ILocator ProductList => page.Locator(".features_items");
         public ILocator SearchInput => page.GetByPlaceholder("Search Product");
         public ILocator SearchBtn => page.Locator("#submit_search");

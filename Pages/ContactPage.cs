@@ -5,7 +5,6 @@ namespace HW_28_AutoEx.Pages
     internal class ContactPage(IPage page) : BasePage(page)
     {
         //private readonly string pageUrl = "https://automationexercise.com/contact_us";
-        private readonly IPage page = page;
         public ILocator NameInput => page.GetByPlaceholder("Name");
         public ILocator EmailInput => page.GetByPlaceholder("Email", new() { Exact = true });
         public ILocator SubjectInput => page.GetByPlaceholder("Subject");

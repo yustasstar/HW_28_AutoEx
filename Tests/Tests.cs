@@ -134,25 +134,91 @@ namespace HW_28_AutoEx.Tests
             //9. Verify that product is displayed in cart page with exact quantity
             await _cartPage.VerifyProductQuantity("4");
         }
+     
+
+        //[Description("Test Case 16: Place Order: Login before Checkout")]
+        //[Test]
+        //public async Task PlaceOrderLoginBeforeCheckout()
+        //{
+        //    //Pre-conditions: User Logined
+        //    //4. Click 'Signup / Login' button
+        //    //5. Fill email, password and click 'Login' button
+        //    //6. Verify 'Logged in as username' at top
+
+        //    //3. Verify that home page is visible successfully
+        //    await page.VerifyCarouselIndicatorsVisability();
+            
+        //    //7. Add products to cart
+        //    //hover product
+        //    await page.Locator(".overlay-content > .btn").First.ClickAsync();
+
+        //    //8. Click 'Cart' button
+        //    await page.GetByRole(AriaRole.Link, new() { Name = "View Cart" }).ClickAsync();
+
+        //    //9. Verify that cart page is displayed
+        //    await Assertions.Expect(page.GetByText("Shopping Cart")).ToBeVisibleAsync();
+
+        //    //10. Click Proceed To Checkout
+        //    await page.GetByText("Proceed To Checkout").ClickAsync();
+
+        //    //CheckoutPage:
+        //    //11. Verify Address Details and Review Your Order
+        //    await page.VerifyPageHeading("Your delivery address");
+        //    await Assertions.Expect(page.Locator("#address_delivery")).ToContainTextAsync("Mr. testFN testLN");
+        //    await Assertions.Expect(page.Locator("#address_delivery")).ToContainTextAsync("testCom");
+        //    await Assertions.Expect(page.Locator("#address_delivery")).ToContainTextAsync("testAddress1");
+        //    await Assertions.Expect(page.Locator("#address_delivery")).ToContainTextAsync("testAddress2");
+        //    await Assertions.Expect(page.Locator("#address_delivery")).ToContainTextAsync("Odessa Odessa 65000");
+        //    await Assertions.Expect(page.Locator("#address_delivery")).ToContainTextAsync("UA");
+        //    await Assertions.Expect(page.Locator("#address_delivery")).ToContainTextAsync("+380671234567");
+
+        //    await page.VerifyPageHeading("Your billing address");
+        //    await Assertions.Expect(page.Locator("#address_invoice")).ToContainTextAsync("Mr. testFN testLN");
+        //    await Assertions.Expect(page.Locator("#address_invoice")).ToContainTextAsync("testCom");
+        //    await Assertions.Expect(page.Locator("#address_invoice")).ToContainTextAsync("testAddress2");
+        //    await Assertions.Expect(page.Locator("#address_invoice")).ToContainTextAsync("Odessa Odessa 65000");
+        //    await Assertions.Expect(page.Locator("#address_invoice")).ToContainTextAsync("UA");
+        //    await Assertions.Expect(page.Locator("#address_invoice")).ToContainTextAsync("+380671234567");
+
+        //    await page.VerifyPageHeading("Total Amount");
+        //    await Assertions.Expect(page.Locator("#cart_info")).ToBeVisibleAsync();
+        //    await Assertions.Expect(page.Locator("#product-1")).ToContainTextAsync("Blue Top");
+        //    await Assertions.Expect(page.Locator("#product-1")).ToContainTextAsync("Rs. 500");
+        //    await Assertions.Expect(page.Locator("#product-1")).ToContainTextAsync("5");
+        //    await Assertions.Expect(page.Locator("#product-1")).ToContainTextAsync("Rs. 2500");
+
+        //    //12. Enter description in comment text area and click 'Place Order'
+        //    await page.Locator("textarea[name='message']").FillAsync("some description");
+        //    await page.ClickLinkBtn("Place Order");
+
+        //    //PaymentPage:
+        //    //13. Enter payment details: Name on Card, Card Number, CVC, Expiration date
+        //    await page.Locator("input[name='name_on_card']").FillAsync("Test name");
+        //    await page.Locator("input[name='card_number']").FillAsync("1234567890123456");
+        //    await page.GetByPlaceholder("ex.").FillAsync("123");
+        //    await page.GetByPlaceholder("MM").FillAsync("12");
+        //    await page.GetByPlaceholder("YYYY").FillAsync("2025");
+
+        //    //14. Click 'Pay and Confirm Order' button
+        //    await page.GetByRole(AriaRole.Button, new() { Name = "Pay and Confirm Order" }).ClickAsync();
+
+        //    //15. Verify success message 'Your order has been placed successfully!'
+        //    await Assertions.Expect(page.Locator("#success-subscribe")).ToContainTextAsync("You have been successfully subscribed!");
+        //    await Assertions.Expect(page.Locator("#form")).ToContainTextAsync("Order Placed!");
+        //    await Assertions.Expect(page.Locator("#form")).ToContainTextAsync("Congratulations! Your order has been confirmed!");
+
+        //    //16. Click 'Delete Account' button
+        //    await page.ClickLinkBtn("Delete Account");
+
+        //    //17. Verify 'ACCOUNT DELETED!' and click 'Continue' button
+        //    await Assertions.Expect(page.Locator("b")).ToContainTextAsync("Account Deleted!");
+        //    await Assertions.Expect(page.Locator("#form")).ToContainTextAsync("Your account has been permanently deleted!");
+
+        //    await page.ClickLinkBtn("Continue");
+        //    await page.VerifyCarouselIndicatorsVisability();
+        //}
 
 
-        //        Test Case 16: Place Order: Login before Checkout
-
-        //3. Verify that home page is visible successfully
-        //4. Click 'Signup / Login' button
-        //5. Fill email, password and click 'Login' button
-        //6. Verify 'Logged in as username' at top
-        //7. Add products to cart
-        //8. Click 'Cart' button
-        //9. Verify that cart page is displayed
-        //10. Click Proceed To Checkout
-        //11. Verify Address Details and Review Your Order
-        //12. Enter description in comment text area and click 'Place Order'
-        //13. Enter payment details: Name on Card, Card Number, CVC, Expiration date
-        //14. Click 'Pay and Confirm Order' button
-        //15. Verify success message 'Your order has been placed successfully!'
-        //16. Click 'Delete Account' button
-        //17. Verify 'ACCOUNT DELETED!' and click 'Continue' button
 
         //        Test Case 17: Remove Products From Cart
 
