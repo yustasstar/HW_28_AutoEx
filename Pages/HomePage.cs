@@ -6,7 +6,6 @@ namespace HW_28_AutoEx.Pages
     {
         private readonly IPage page = page;
         public ILocator CarouselIndicators => page.Locator(".carousel-indicators");
-        //private ILocator ElementLocator2 => page.Locator("selector2");
 
         public async Task ClickLinkBtn(string linkName)
         {

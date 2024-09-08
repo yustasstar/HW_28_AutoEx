@@ -7,7 +7,6 @@ namespace HW_28_AutoEx.Pages
         //private readonly string productPageUrl = "https://automationexercise.com/products";
         private readonly IPage page = page;
         public ILocator ProductList => page.Locator(".features_items");
-        public ILocator Product => page.Locator(".single-products");
         public ILocator SearchInput => page.GetByPlaceholder("Search Product");
         public ILocator SearchBtn => page.Locator("#submit_search");
         public ILocator ProductCardText => page.Locator("//*[@class='productinfo text-center']//p"); 
