@@ -11,9 +11,9 @@ namespace HW_28_AutoEx.Tests
     {
         private HomePage _homePage;
         private ProductsPage _productsPage;
-        private ProductsDetailsPage _productsDetailsPage;
+        private DetailsPage _detailsPage;
         private CartPage _cartPage;
-        private LoginPage _loginPage;
+        //private LoginPage _loginPage;
         private ContactPage _contactPage;
 
         [SetUp]
@@ -21,9 +21,9 @@ namespace HW_28_AutoEx.Tests
         {
             _homePage = new HomePage(Page!);
             _productsPage = new ProductsPage(Page!);
-            _productsDetailsPage = new ProductsDetailsPage(Page!);
+            _detailsPage = new DetailsPage(Page!);
             _cartPage = new CartPage(Page!);
-            _loginPage = new LoginPage(Page!);
+            //_loginPage = new LoginPage(Page!);
             _contactPage = new ContactPage(Page!);
         }
 
@@ -34,7 +34,7 @@ namespace HW_28_AutoEx.Tests
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
             //4.Click on 'Contact Us' button
-            await _homePage.ClickOnLink("Contact us");
+            await _homePage.ClickLinkBtn("Contact us");
             //5.Verify 'GET IN TOUCH' is visible
             await _contactPage.VerifyPageHeading("GET IN TOUCH");
             //6.Enter name, email, subject and message
@@ -62,17 +62,17 @@ namespace HW_28_AutoEx.Tests
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
             //4. Click on 'Products' button
-            await _homePage.ClickOnLink("Products");
+            await _homePage.ClickLinkBtn("Products");
             //5. Verify user is navigated to ALL PRODUCTS page successfully
             await _productsPage.VerifyPageHeading("All Products");
             //6. The products list is visible
             await _productsPage.VerifyProductsListVisability();
             //7. Click on 'View Product' of first product
-            await _productsPage.ClickOnLink("View Product");
+            await _productsPage.ClickLinkBtn("View Product");
             //8. User is landed to product detail page
-            await _productsDetailsPage.VerifyProductsDetailsOpened();
+            await _detailsPage.VerifyProductsDetailsOpened();
             //9. Verify that product detail is visible: product name, category, price, availability, condition, brand
-            await _productsDetailsPage.VerifyProductsDetailsContentVisability();
+            await _detailsPage.VerifyProductsDetailsContentVisability();
         }
 
         [Description("Test Case 9: Search Product")]
@@ -84,7 +84,7 @@ namespace HW_28_AutoEx.Tests
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
             //4. Click on 'Products' button
-            await _homePage.ClickOnLink("Products");
+            await _homePage.ClickLinkBtn("Products");
             //5. Verify user is navigated to ALL PRODUCTS page successfully
             await _productsPage.VerifyPageHeading("All Products");
             //6. Enter product name in search input and click search button
@@ -104,7 +104,7 @@ namespace HW_28_AutoEx.Tests
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
             //4. Click 'Cart' button
-            await _homePage.ClickOnLink("Cart");
+            await _homePage.ClickLinkBtn("Cart");
             //5. Scroll down to footer
             //6. Verify text 'SUBSCRIPTION'
             await _cartPage.VerifyPageHeading("SUBSCRIPTION");
@@ -122,16 +122,17 @@ namespace HW_28_AutoEx.Tests
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
             //4. Click 'View Product' for any product on home page
-            await _homePage.ClickOnLink("View Product");
+            await _homePage.ClickLinkBtn("View Product");
             //5. Verify product detail is opened
-            await _productsDetailsPage.VerifyProductsDetailsOpened();
-
+            await _detailsPage.VerifyProductsDetailsOpened();
             //6. Increase quantity to 4
+            await _detailsPage.Quantity.FillAsync("4");
             //7. Click 'Add to cart' button
+            await _detailsPage.AddBtn.ClickAsync();
             //8. Click 'View Cart' button
+            await _detailsPage.ClickLinkBtn("View Cart");
             //9. Verify that product is displayed in cart page with exact quantity
-
-
+            await _cartPage.VerifyProductQuantity("4");
         }
 
 

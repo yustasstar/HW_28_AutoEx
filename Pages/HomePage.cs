@@ -8,7 +8,7 @@ namespace HW_28_AutoEx.Pages
         public ILocator CarouselIndicators => page.Locator(".carousel-indicators");
         //private ILocator ElementLocator2 => page.Locator("selector2");
 
-        public async Task ClickOnLink(string linkName)
+        public async Task ClickLinkBtn(string linkName)
         {
             await page.GetByRole(AriaRole.Link).Filter(new() { HasText = $"{linkName}" }).First.ClickAsync();
         }

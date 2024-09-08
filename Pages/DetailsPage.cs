@@ -2,11 +2,13 @@
 
 namespace HW_28_AutoEx.Pages
 {
-    internal class ProductsDetailsPage(IPage page) : HomePage(page)
+    internal class DetailsPage(IPage page) : HomePage(page)
     {
         //private readonly string productPageUrl = "https://automationexercise.com/product_details/#";
         private readonly IPage page = page;
         public ILocator ProductDetails => page.Locator(".product-details");
+        public ILocator Quantity => page.Locator("#quantity");
+        public ILocator AddBtn => page.GetByRole(AriaRole.Button, new() { Name = "Add to cart" });
 
 
         public async Task VerifyProductsDetailsOpened()
