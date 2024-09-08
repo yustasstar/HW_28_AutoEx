@@ -11,6 +11,7 @@ namespace HW_28_AutoEx.Tests
     {
         private HomePage _homePage;
         private ProductsPage _productsPage;
+        private ProductsDetailsPage _productsDetailsPage;
         private CartPage _cartPage;
         private LoginPage _loginPage;
         private ContactPage _contactPage;
@@ -20,6 +21,7 @@ namespace HW_28_AutoEx.Tests
         {
             _homePage = new HomePage(Page!);
             _productsPage = new ProductsPage(Page!);
+            _productsDetailsPage = new ProductsDetailsPage(Page!);
             _cartPage = new CartPage(Page!);
             _loginPage = new LoginPage(Page!);
             _contactPage = new ContactPage(Page!);
@@ -55,7 +57,7 @@ namespace HW_28_AutoEx.Tests
 
         [Description("Test Case 8: Verify All Products and product detail page")]
         [Test]
-        public async Task ProductDetails()
+        public async Task ProductDetailsContent()
         {
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
@@ -68,9 +70,9 @@ namespace HW_28_AutoEx.Tests
             //7. Click on 'View Product' of first product
             await _productsPage.ClickOnLink("View Product");
             //8. User is landed to product detail page
-            await _productsPage.VerifyProductsDetailsOpened();
+            await _productsDetailsPage.VerifyProductsDetailsOpened();
             //9. Verify that product detail is visible: product name, category, price, availability, condition, brand
-            await _productsPage.VerifyProductsDetailsContentVisability();
+            await _productsDetailsPage.VerifyProductsDetailsContentVisability();
         }
 
         [Description("Test Case 9: Search Product")]
@@ -95,9 +97,9 @@ namespace HW_28_AutoEx.Tests
 
         }      
 
-        [Description("Test Case 11: Verify Subscription in Cart page")]
+        [Description("Test Case 11: Verify SubscriptionInCart in Cart page")]
         [Test]
-        public async Task Subscription()
+        public async Task SubscriptionInCart()
         {
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
@@ -115,13 +117,15 @@ namespace HW_28_AutoEx.Tests
        
         [Description("Test Case 13: Verify Product quantity in Cart")]
         [Test]
-        public async Task ProductQuantity()
+        public async Task ProductQuantityInCart()
         {
             //3.Verify that home page is visible successfully
             await _homePage.VerifyCarouselIndicatorsVisability();
             //4. Click 'View Product' for any product on home page
-            await _homePage.VerifyCarouselIndicatorsVisability();
+            await _homePage.ClickOnLink("View Product");
             //5. Verify product detail is opened
+            await _productsDetailsPage.VerifyProductsDetailsOpened();
+
             //6. Increase quantity to 4
             //7. Click 'Add to cart' button
             //8. Click 'View Cart' button

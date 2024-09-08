@@ -16,10 +16,6 @@ namespace HW_28_AutoEx.Pages
             await page.Locator(".choose > .nav > li > a").First.ClickAsync();
             await Assertions.Expect(page.Locator(".product-details")).ToBeVisibleAsync();
 
-            await page.Locator("#quantity").ClickAsync();
-            await page.Locator("#quantity").ClickAsync();
-            await page.Locator("#quantity").ClickAsync();
-            await page.Locator("#quantity").ClickAsync();
             await page.Locator("#quantity").FillAsync("4");
             await page.GetByRole(AriaRole.Button, new() { Name = " Add to cart" }).ClickAsync();
             await Assertions.Expect(page.GetByRole(AriaRole.Heading, new() { Name = "Added!" })).ToBeVisibleAsync();
